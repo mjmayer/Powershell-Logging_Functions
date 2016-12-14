@@ -39,11 +39,13 @@
     
   [CmdletBinding()]
   
-  Param ([Parameter(Mandatory=$true)][string]$LogPath, [Parameter(Mandatory=$true)][string]$LogName, [Parameter(Mandatory=$true)][string]$ScriptVersion)
+  Param ([Parameter(Mandatory=$true)][string]$LogPath, [Parameter(Mandatory=$true)][string]$ScriptVersion)
   
   Process{
-    $sFullPath = $LogPath + "\" + $LogName
-    
+    $sFullPath = $LogPath
+    $LogName = Split-Path -leaf $LogPath
+    $LogPath = Split-Path -Parent $LogPath
+
     #Check if file exists and delete if it does
     If((Test-Path -Path $sFullPath)){
       Remove-Item -Path $sFullPath -Force
